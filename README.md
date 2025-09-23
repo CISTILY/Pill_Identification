@@ -1,4 +1,4 @@
-# Personal Project - Dataset for Real time pill identification with auto-labeling
+# Project - Dataset for Real time pill identification with auto-labeling
 
 This project focuses on building a comprehensive pill dataset that reflects the pills currently circulating in Vietnam. The dataset is automatically labeled and organized to support research in pill recognition and classification, especially in real-world healthcare and pharmacy scenarios.
 
