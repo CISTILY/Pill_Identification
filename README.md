@@ -26,4 +26,5 @@ We capture pill images using Iphone 11 12MP camera, the setup consist of three d
 
 ## Dataset changelog
 24/09/2025 - Add 48 pills with 864 images.
+
 22/09/2025 — Initialize dataset with 22 pills of different shapes (circle, oval, capsule, square, triangular, etc.). Each pill consists of 18 pictures in both front and back sides with different background, lightning and scale. 
