@@ -25,6 +25,11 @@ Different deep learning models (e.g., CNN-based, Vision Transformer, lightweight
 We capture pill images using Iphone 11 12MP camera, the setup consist of three different background and two light source. We randomly place the pills into on the background and take 3 picture on each background with random lightning and orientation. The background is displayed below with some sample pills.
 
 ## Dataset changelog
-24/09/2025 - Add 48 pills with 864 images.
+25/09/2025 — Added 68 pills with 1,224 images.
+➡️ Current total: 165 pills, 3,312 images.
 
-22/09/2025 — Initialize dataset with 22 pills of different shapes (circle, oval, capsule, square, triangular, etc.). Each pill consists of 18 pictures in both front and back sides with different background, lightning and scale. 
+24/09/2025 — Added 48 pills with 864 images.
+➡️ Current total: 98 pills, 2,088 images.
+
+22/09/2025 — Dataset initialized with 22 pills of various shapes (circle, oval, capsule, square, triangular, etc.). ➡️ Current total: 22 pills, 396 images.
+* Each pill includes 18 images (front & back) under different backgrounds, lighting, and scales.
