@@ -1,7 +1,7 @@
 task: detect
 mode: train
 model: yolov8s.pt
-data: D:/Pill_Identification/YOLOv8\data.yaml
+data: D:/Pill_Identification/model/YOLOv8\data.yaml
 epochs: 40
 time: null
 patience: 100
