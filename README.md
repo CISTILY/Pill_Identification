@@ -25,7 +25,7 @@ Different deep learning models (e.g., CNN-based, Vision Transformer, lightweight
 We capture pill images using Iphone 11 12MP camera, the setup consist of three different background and two light source. We randomly place the pills into on the background and take 3 picture on each background with random lightning and orientation. The background is displayed below with some sample pills.
 
 ## Dataset access
-This dataset can be accessed through Kaggle with following link: https://www.kaggle.com/datasets/cistily/vn-pills-original
+This dataset can be accessed by contacting me via personal mail
 
 ## Dataset changelog
 01/10/2025 — Added 121 pills with 2,006 images.
