@@ -1,0 +1,102 @@
+Pill_id,Status,Type,Shape,Color,Number of images,Imprint front,Imprint back,Wood_background,Flat background,Texture background,Duplicate with
+0,Checked,Capsule,None,Gray/Green,18,0,0,1,1,0,None
+1,Checked,Tablet,Rounded Rectangle,Pink,18,1,1,1,1,0,None
+2,Checked,Tablet,Rounded,Orange,18,0,0,1,1,0,None
+3,Checked,Soft Capsule,None,Dark green,18,0,0,1,1,0,None
+4,Checked,Tablet,Rounded,White,18,1,0,1,1,0,None
+5,Checked,Capsule,None,Yellow/Orange,18,0,0,1,1,0,None
+6,Checked,Capsule,None,Red/White,18,0,0,1,1,0,None
+7,Checked,Capsule,None,Green,18,0,0,1,1,0,None
+8,Checked,Capsule,None,White/Green,18,0,0,1,1,0,None
+9,Checked,Capsule,None,White/Pink,18,0,0,1,1,0,None
+10,Checked,Tablet,Hexagonal,White,18,0,0,1,1,0,None
+11,Checked,Tablet,Rounded Rectangle,Yellow,18,1,0,1,1,0,None
+12,Checked,Tablet,Rounded,Yellow,18,1,0,1,1,0,None
+13,Checked,Tablet,Rounded,Orange,18,0,0,1,1,0,2
+14,Checked,Capsule,None,Light Brown,18,0,0,1,1,0,None
+15,Checked,Tablet,Rounded Belved Edge,White,18,0,0,1,1,0,None
+16,Checked,Capsule,None,White/Yellow,18,0,0,1,1,0,None
+17,Checked,Tablet,Rounded Belved Edge,Pink,18,1,0,1,1,0,None
+18,Checked,Tablet,Rounded Rectangle,Blue,18,1,0,1,1,0,None
+19,Checked,Tablet,Rounded,Dark Blue,18,0,0,1,1,0,None
+20,Checked,Tablet,Rounded Rectangle,Blue,18,1,1,1,1,0,None
+21,Checked,Tablet,Triangle,Orange,18,0,0,1,1,0,None
+22,Checked,Tablet,Rounded,Green,18,0,0,1,1,0,None
+23,Checked,Tablet,Rounded,Yellow,18,0,0,1,1,0,None
+24,Checked,Tablet,Rounded Belved Edge Rectangle,White,18,0,0,1,1,0,None
+25,Checked,Tablet,Rounded,White,18,0,0,1,1,0,None
+26,Checked,Tablet,Oval,White,18,0,0,1,1,0,None
+27,Checked,Tablet,Rounded Rectangle,Orange,18,1,0,1,1,0,None
+28,Checked,Tablet,Rounded Belved Edge,White,18,1,0,1,1,0,None
+29,Checked,Soft Capsule,None,Dark Red,18,0,0,1,1,0,None
+30,Checked,Tablet,Rounded,White,18,1,1,1,1,0,None
+31,Checked,Tablet,Rounded,Brown,18,0,0,1,1,0,None
+32,Checked,Tablet,Rounded,Orange,18,0,0,1,1,0,None
+33,Checked,Tablet,Rounded,Orange,18,0,0,1,1,0,None
+34,Checked,Tablet,Oval,Pink,18,0,0,1,1,0,None
+35,Checked,Tablet,Rounded Rectangle,White,18,1,1,1,1,0,None
+36,Checked,Tablet,Rounded Rectangle,White,18,0,0,1,1,0,None
+37,Checked,Tablet,Rounded Rectangle,Orange,18,1,0,1,1,0,None
+38,Checked,Tablet,Rounded,Pink,18,0,0,1,1,0,None
+39,Checked,Tablet,Rounded Rectangle,White/Orange,18,1,1,1,1,0,None
+40,Checked,Soft Capsule, None,Light Green,18,0,0,1,1,0,None
+41,Checked,Tablet,Rounded Rectangle,Orange,18,1,1,1,1,0,None
+42,Checked,Tablet,Rounded,White,18,0,0,1,1,0,None
+43,Checked,Tablet,Rounded,Pink,18,0,0,1,1,0,None
+44,Checked,Tablet,Rounded,White,18,1,0,1,1,0,None
+45,Checked,Tablet,Rounded,Light Blue,18,0,0,1,1,0,None
+46,Checked,Tablet,Rounded,White,18,0,0,1,1,0,None
+47,Checked,Tablet,Rounded Rectangle,Blue,18,1,1,1,1,0,None
+48,Checked,Tablet,Rounded Rectangle,White,18,1,0,1,1,0,None
+49,Checked,Tablet,Rounded Rectangle,White,18,1,0,1,1,0,None
+50,Checked,Tablet,Rounded Rectangle,White,18,1,0,1,1,0,None
+51,Checked,Capsule,None,Light Green,18,0,0,1,1,0,None
+52,Checked,Capsule,None,White/Yellow,18,0,0,1,1,0,None
+53,Checked,Tablet,Oval,White,18,1,0,1,1,0,None
+54,Checked,Tablet,Rounded Rectangle,Beige,18,1,1,1,1,0,None
+55,Checked,Tablet,Rounded,White,18,0,0,1,1,0,None
+56,Checked,Tablet,Rounded Rectangle,Yellow,18,1,1,1,1,0,None
+57,Checked,Tablet,Rounded Belved Edge,White,18,1,1,1,1,0,None
+58,Checked,Capsule,None,Light Brown/Light Purple,18,0,0,1,1,0,None
+59,Checked,Tablet,Rounded,Pink,18,1,0,1,1,0,None
+60,Checked,Tablet,Heart,Brown,18,1,1,1,1,0,None
+61,Checked,Capsule,None,Light Green,18,0,0,1,1,0,None
+62,Checked,Tablet,Rounded Belved Edge,White,18,1,0,1,1,0,None
+63,Checked,Tablet,Rounded,White,18,0,0,1,1,0,None
+64,Checked,Tablet,Rounded,White,18,1,0,1,1,0,None
+65,Checked,Tablet,Oval,White,18,1,0,1,1,0,None
+66,Checked,Tablet,Rounded Belved Edge,White,18,1,0,1,1,0,None
+67,Checked,Tablet,Rounded Rectangle,White,18,0,0,1,1,0,None
+68,Checked,Tablet,Oval,Light Green,18,1,0,1,1,0,None
+69,Checked,Tablet,Oval,White,18,1,1,1,1,0,None
+70,Checked,Tablet,Rounded,Pink,18,1,0,1,1,0,None
+71,Checked,Tablet,Oval,White,18,1,0,1,1,0,None
+72,Checked,Tablet,Rounded,White,18,0,0,1,1,0,None
+73,Checked,Tablet,Rounded Rectangle,White,18,1,1,1,1,0,None
+74,Checked,Tablet,Rounded Rectangle,White,18,1,1,1,1,0,None
+75,Checked,Tablet,Rounded Rectangle,Light Orange,18,0,0,1,1,0,None
+76,Checked,Tablet,Rounded,White,18,1,0,1,1,0,None
+77,Checked,Tablet,Rounded,White,18,1,0,1,1,0,None
+78,Checked,Tablet,Rounded Rectangle,Pink,18,1,1,1,1,0,None
+79,Checked,Tablet,Rounded,Pink,18,0,0,1,1,0,None
+80,Checked,Tablet,Rounded,Yellow,18,1,0,1,1,0,None
+81,Checked,Tablet,Rounded Belved Edge,White,18,1,1,1,1,0,None
+82,Checked,Tablet,Rounded,Red,18,0,0,1,1,0,None
+83,Checked,Tablet,Rounded,Yellow,18,1,1,1,1,0,None
+84,Checked,Tablet,Rounded,Red,18,0,0,1,1,0,None
+85,Checked,Tablet,Rounded Rectangle,White,18,1,1,1,1,0,None
+86,Checked,Tablet,Rounded,Yellow,18,1,1,1,1,0,None
+87,Checked,Tablet,Rounded,Yellow,18,1,0,1,1,0,None
+88,Checked,Tablet,Rounded Rectangle,Yellow,18,1,0,1,1,0,None
+89,Checked,Tablet,Rounded,White,18,0,0,1,1,0,None
+90,Checked,Capsule,None,Dark Blue,18,0,0,1,1,0,None
+91,Checked,Tablet,Rounded,White,18,1,0,1,1,0,None
+92,Checked,Tablet,Rounded Belved Edge,Beige,18,1,1,1,1,0,None
+93,Checked,Tablet,Rounded,White,18,1,1,1,1,0,None
+94,Checked,Soft Capsule,None,Green,18,0,0,1,1,0,None
+95,Checked,Tablet,Rounded Rectangle,White,18,0,0,1,1,0,None
+96,Checked,Tablet,Rounded Rectangle,White,18,0,0,1,1,0,None
+97,Checked,Capsule,None,Red/White,18,0,0,1,1,0,None
+98,Checked,Capsule,None,Light Green/Green,18,0,0,1,1,0,None
+99,Checked,Tablet,Rounded Rectangle,White,18,1,1,1,1,0,None
+100,Checked,Capsule,None,White/Dark Green,18,0,0,1,1,0,None
