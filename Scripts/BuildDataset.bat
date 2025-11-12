@@ -26,6 +26,7 @@ SET "SIZE=640"
 REM --- Building dataset ---
 SET "INPUT_DATA_DIR=D:\Pill_Identification\Data\ProcessedData"
 SET "DATASET_DIR=D:\Pill_Identification\Data\PILL_JPG_2025"
+SET "FLATTEN=True"
 SET "NUMBER=18"
 
 REM --- Remove background ---
@@ -72,7 +73,7 @@ IF %ERRORLEVEL% NEQ 0 (
 
 REM --- 3. Building dataset script ---
 echo [INFO] Running step 3: Building dataset
-call python D:\Pill_Identification\Preprocess\BuildDataset.py --input "%INPUT_DATA_DIR%" --output "%DATASET_DIR%" -n "%NUMBER%"
+call python D:\Pill_Identification\Preprocess\BuildDataset.py --input "%INPUT_DATA_DIR%" --output "%DATASET_DIR%" -n "%NUMBER%" -f "%FLATTEN%"
 
 REM Kiem tra loi co ban
 IF %ERRORLEVEL% NEQ 0 (

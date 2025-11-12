@@ -1,0 +1,12 @@
+# Media extensions
+*.png
+*.jpg
+*.txt
+*.csv
+*.HEIC
+
+# Model related extensions
+*.pt
+*.yaml
+*.cache
+*.pyc
