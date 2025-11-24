@@ -1,40 +1,17 @@
-import ultralytics
 from ultralytics import YOLO
 import os
 import matplotlib.pyplot as plt
 import warnings
-import torch
 import yaml
 import glob
 import numpy as np
 from sklearn.model_selection import KFold, train_test_split # Added train_test_split
-import shutil # For file operations
+from hydra.core.hydra_config import HydraConfig
 
-# --- 2. Configuration & Constants ---
+import hydra
+from omegaconf import DictConfig, OmegaConf
 
-# --- MUST-HAVE ---
-# 1. Define the paths to your *single* data folder
-ALL_IMAGES_DIR = "D:/Pill_Identification/Data/LabeledData/images"
-ALL_LABELS_DIR = "D:/Pill_Identification/Data/LabeledData/labels"
-
-# 2. Define your class names in the correct order
-# (This MUST match the class IDs in your label files)
-CLASS_NAMES = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20"]
-NUM_CLASSES = len(CLASS_NAMES)
-
-# 3. Define your project directory and base model
-ROOT_DIR = "D:/Pill_Identification/model/YOLOv8"
-BASE_MODEL = 'yolov8s.pt'
-# --- END MUST-HAVE ---
-
-# --- Settings ---
-DEVICE = 'cuda' if torch.cuda.is_available() else 'cpu'
-TEST_SET_SIZE = 0.20  # 20% of data will be held back for the final test set
-K_FOLDS = 5           # Number of folds for cross-validation
-CONFIG_DIR = os.path.join(ROOT_DIR, 'data_splits_config') # To store generated YAML/TXT files
-
-# Create the config directory
-os.makedirs(CONFIG_DIR, exist_ok=True)
+warnings.filterwarnings("ignore")
 
 # --- 3. Functional Blocks ---
 
@@ -76,39 +53,25 @@ def prepare_data_splits(images_dir, labels_dir, test_size, random_state=42):
     return train_val_pool, test_set_files
 
 
-def run_kfold_training(
-    train_val_pool, 
-    nc, 
-    names, 
-    base_model, 
-    epochs, 
-    batch_size, 
-    img_size, 
-    lr0, 
-    lrf, 
-    device, 
-    k=5
-):
+def run_kfold_training(train_val_pool, cfg, hydra_output_dir):
     """
     Runs K-fold cross-validation on the provided 'train_val_pool' of images.
     """
-    print(f"\n--- Starting {k}-Fold Cross-Validation ---")
+    print(f"\n--- Starting {cfg.training.K_FOLDS}-Fold Cross-Validation ---")
     
-    kf = KFold(n_splits=k, shuffle=True, random_state=42)
+    kf = KFold(n_splits=cfg.training.K_FOLDS, shuffle=True, random_state=42)
     all_metrics_map50 = []
-    
-    kfold_project_dir = os.path.join(ROOT_DIR, 'runs', 'kfold_detect')
     
     for fold_idx, (train_indices, val_indices) in enumerate(kf.split(train_val_pool)):
         fold_num = fold_idx + 1
-        print(f"\n--- Fold {fold_num}/{k} ---")
+        print(f"\n--- Fold {fold_num}/{cfg.training.K_FOLDS} ---")
         
         # Get file paths for this fold
         train_files = [train_val_pool[i] for i in train_indices]
         val_files = [train_val_pool[i] for i in val_indices]
         
         # --- Write train.txt and val.txt for this fold ---
-        fold_config_dir = os.path.join(CONFIG_DIR, f'fold_{fold_num}')
+        fold_config_dir = os.path.join(cfg.paths.CONFIG_DIR, f'fold_{fold_num}')
         os.makedirs(fold_config_dir, exist_ok=True)
         
         train_txt_path = os.path.join(fold_config_dir, 'train.txt')
@@ -124,27 +87,28 @@ def run_kfold_training(
         kfold_yaml_data = {
             'train': train_txt_path,
             'val': val_txt_path,
-            'nc': nc,
-            'names': names
+            'nc': cfg.settings.NUM_CLASSES,
+            'names': list(cfg.settings.CLASS_NAMES)
         }
         
         with open(kfold_yaml_path, 'w') as f:
             yaml.dump(kfold_yaml_data, f)
             
         # --- Train for this fold ---
-        model = YOLO(base_model)
-        model.to(device)
-        
+        model = YOLO(cfg.paths.BASE_MODEL)
+        model.to(cfg.settings.DEVICE)
+
         results = model.train(
             data=kfold_yaml_path,
-            epochs=epochs,
-            batch=batch_size,
-            imgsz=img_size,
-            lr0=lr0,
-            lrf=lrf,
-            device=device,
-            project=kfold_project_dir,
-            name=f'fold_{fold_num}'
+            epochs=cfg.training.epochs,
+            batch=cfg.training.batch_size,
+            imgsz=cfg.training.img_size,
+            lr0=cfg.training.lr0,
+            lrf=cfg.training.lrf,
+            device=cfg.settings.DEVICE,
+            project=hydra_output_dir + "/yolo_runs",
+            name=f'fold_{fold_num}',
+            exist_ok=True
         )
         
         final_map50 = results.box.map50
@@ -154,7 +118,7 @@ def run_kfold_training(
     # --- Print average results ---
     print(f"\n--- K-Fold Training Complete ---")
     mean_map50 = np.mean(all_metrics_map50)
-    std_map50 = np.std(all_metrics_map50)
+    std_map50 = np.std(all_metrics_map50) 
     
     print(f"All Fold mAP50 scores: {[round(m, 4) for m in all_metrics_map50]}")
     print(f"Average mAP50: {mean_map50:.4f} (+/- {std_map50:.4f})")
@@ -164,7 +128,7 @@ def run_kfold_training(
     return best_model_path, mean_map50
 
 
-def validate_on_test_set(model_path, test_set_files, nc, names, img_size, conf_threshold):
+def validate_on_test_set(model_path, test_set_files, cfg, hydra_output_dir):
     """
     Validates the best model on the held-out test set.
     """
@@ -172,7 +136,7 @@ def validate_on_test_set(model_path, test_set_files, nc, names, img_size, conf_t
     print(f"Model: {model_path}")
 
     # --- Write test.txt ---
-    test_config_dir = os.path.join(CONFIG_DIR, 'test_set')
+    test_config_dir = os.path.join(cfg.paths.CONFIG_DIR, 'test_set')
     os.makedirs(test_config_dir, exist_ok=True)
     test_txt_path = os.path.join(test_config_dir, 'test.txt')
     
@@ -184,8 +148,8 @@ def validate_on_test_set(model_path, test_set_files, nc, names, img_size, conf_t
     test_yaml_data = {
         'train': test_txt_path,
         'val': test_txt_path,  # We point 'val' to our test.txt for model.val()
-        'nc': nc,
-        'names': names
+        'nc': cfg.settings.NUM_CLASSES,
+        'names': list(cfg.settings.CLASS_NAMES)
     }
     with open(test_yaml_path, 'w') as f:
         yaml.dump(test_yaml_data, f)
@@ -194,8 +158,9 @@ def validate_on_test_set(model_path, test_set_files, nc, names, img_size, conf_t
     model = YOLO(model_path)
     metrics = model.val(
         data=test_yaml_path,
-        imgsz=img_size,
-        conf=conf_threshold,
+        imgsz=cfg.training.img_size,
+        conf=cfg.settings.CONF_THRESHOLD,
+        project=hydra_output_dir,
         split='val'  # We use 'val' split because our YAML points 'val' to the test set
     )
     
@@ -205,7 +170,7 @@ def validate_on_test_set(model_path, test_set_files, nc, names, img_size, conf_t
     print(f"  mAP75:     {metrics.box.map75:.4f}")
 
 
-def predict_on_image(model_path, image_path, img_size, line_width=2):
+def predict_on_image(model_path, image_path, cfg, line_width=2):
     """
     Runs prediction on a single image and displays the result using matplotlib.
     """
@@ -214,7 +179,7 @@ def predict_on_image(model_path, image_path, img_size, line_width=2):
     print(f"Image: {image_path}")
 
     model = YOLO(model_path)
-    results = model.predict(source=image_path, imgsz=img_size)
+    results = model.predict(source=image_path, imgsz=cfg.training.img_size)
 
     if results:
         annotated_image_bgr = results[0].plot(line_width=line_width)
@@ -227,32 +192,36 @@ def predict_on_image(model_path, image_path, img_size, line_width=2):
         plt.show()
 
 # --- 4. Main Execution ---
-
-def main():
+@hydra.main(config_path="Configs", config_name="config", version_base=None)
+def main(cfg: DictConfig):
     """
     Main function to run the full pipeline.
     """
     
+    print(OmegaConf.to_yaml(cfg))
+
+    os.makedirs(cfg.paths.CONFIG_DIR, exist_ok=True)
+
+    print(f"▶ Running with LR={cfg.training.lr0}, "
+          f"BATCH_SIZE={cfg.training.batch_size}, "
+          f"EPOCHS={cfg.training.epochs}, "
+          f"K={cfg.training.K_FOLDS}")
+    
+    hydra_output_dir = HydraConfig.get().runtime.output_dir
+    print("Hydra output dir:", hydra_output_dir)
+
     # === Step 1: Split all data into a Train/Val pool and a Test set ===
     train_val_pool, test_set_files = prepare_data_splits(
-        images_dir=ALL_IMAGES_DIR,
-        labels_dir=ALL_LABELS_DIR,
-        test_size=TEST_SET_SIZE
+        images_dir=cfg.paths.ALL_IMAGES_DIR,
+        labels_dir=cfg.paths.ALL_LABELS_DIR,
+        test_size=cfg.training.TEST_SET_SIZE
     )
     
     # === Step 2: Run K-Fold Training on the Train/Val pool ===
     best_model_from_kfold, avg_map50 = run_kfold_training(
         train_val_pool=train_val_pool,
-        nc=NUM_CLASSES,
-        names=CLASS_NAMES,
-        base_model=BASE_MODEL,
-        epochs=5,
-        batch_size=16,
-        img_size=640,
-        lr0=0.0001,
-        lrf=0.1,
-        device=DEVICE,
-        k=K_FOLDS
+        cfg=cfg,
+        hydra_output_dir=hydra_output_dir
     )
     
     print(f"\nK-Fold process finished. Average mAP50: {avg_map50:.4f}")
@@ -262,10 +231,8 @@ def main():
     validate_on_test_set(
         model_path=best_model_from_kfold,
         test_set_files=test_set_files,
-        nc=NUM_CLASSES,
-        names=CLASS_NAMES,
-        img_size=640,
-        conf_threshold=0.25
+        cfg=cfg,
+        hydra_output_dir=hydra_output_dir
     )
     
     # === Step 4: Predict with the final model ===
@@ -275,7 +242,7 @@ def main():
         predict_on_image(
             model_path=best_model_from_kfold,
             image_path=image_to_test,
-            img_size=640
+            cfg=cfg
         )
     else:
         print("No test images to predict on.")
