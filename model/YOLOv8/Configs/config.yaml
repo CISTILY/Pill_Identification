@@ -1,0 +1,4 @@
+defaults:
+  - paths
+  - training
+  - settings

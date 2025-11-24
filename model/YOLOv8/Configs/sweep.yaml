@@ -1,0 +1,10 @@
+defaults:
+  - paths
+  - training
+  - settings
+
+hydra:
+  sweeper:
+    params:
+      training.lr0: 0.001
+      training.epochs: 1

@@ -7,6 +7,5 @@
 
 # Model related extensions
 *.pt
-*.yaml
 *.cache
 *.pyc

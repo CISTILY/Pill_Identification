@@ -1,0 +1,7 @@
+# Dataset & directories
+paths:
+  ALL_IMAGES_DIR: "D:/Pill_Identification/Data/LabeledData/images"
+  ALL_LABELS_DIR: "D:/Pill_Identification/Data/LabeledData/labels"
+  ROOT_DIR: "D:/Pill_Identification/model/YOLOv8"
+  BASE_MODEL: "D:/Pill_Identification/Model/YOLOv8/yolov8s.pt"
+  CONFIG_DIR: "${paths.ROOT_DIR}/data_splits_config"
